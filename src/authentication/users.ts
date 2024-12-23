@@ -29,31 +29,21 @@ interface UnifiedInterface {
 
 //turn this into a trigger
 
-export const onUserSignUp = onCall(async (data, context) => {
+export const onUserSignUp = onCall(async (request) => {
+    // Ensure the function is called by an authenticated user
+    const data = request.data;
+
     try {
-       /* const data: UnifiedInterface = {
-            user: {
-                fullName: 'Musa Jahun',
-                email: 'mjahun@gmail.com',
-                phoneNumber: '08093446914',
-            },
-            password: 'Ims2024#',
-            company: {
-                id: 'company1',
-                name: 'Arewa Textile Kaduna Ltd',
-                logo: '/arewa-text-logo2.png',
-                email: 'arewax34@gmail.com',
-                address: 'No. 15 Sabongari, Zaria, Kaduna',
-            },
-        };*/
-        const d = data.data as UnifiedInterface;
+
+
+        const d = data as UnifiedInterface;
 
         const companyId = await createCompany(d.company);
         await createUsers(d.user, d.password, companyId);
 
-        return {status: 'success'};
+        return {status: 'success', message: 'we are all good!'};
     } catch (e) {
-        return {status: 'error'};
+        return {status: 'error', message: e.message.toString()};
     }
 
 });
