@@ -88,6 +88,15 @@ export async function createCompany(company1: {
 
     const company = await admin.firestore().collection('companies').add({
         ...company1,
+        counters: {
+            invoices: 0,
+            customers:0,
+            expenses: 0,
+            payments: 0,
+            salesReceipts: 0,
+            quotations: 0
+
+        },
         createdOn: date.toString(),
         updatedOn: date.toString()
     });
