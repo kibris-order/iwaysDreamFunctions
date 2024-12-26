@@ -1,7 +1,5 @@
-import { onDocumentUpdated } from 'firebase-functions/v2/firestore';
+import { onDocumentUpdated, onDocumentDeleted} from 'firebase-functions/v2/firestore';
 import * as admin from 'firebase-admin';
-import {onDocumentDeleted} from "firebase-functions/lib/v2/providers/firestore";
-
 
 
 
