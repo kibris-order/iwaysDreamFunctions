@@ -1,3 +1,4 @@
+/*
 import { onDocumentDeleted } from 'firebase-functions/v2/firestore';
 import * as admin from 'firebase-admin';
 
@@ -39,3 +40,4 @@ const deleteRelatedDocuments = async (collectionName: string, companyid: string,
         console.error(`Error deleting documents in ${collectionName}:`, error);
     }
 };
+*/
