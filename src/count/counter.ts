@@ -75,6 +75,8 @@ async function updateCountHelper(companyId: string, propertyName: string) {
     await docRef.set({
         counters: {...updatedCounter}
     }, {merge: true});
+
+
 }
 
 
