@@ -1,6 +1,35 @@
 import * as admin from 'firebase-admin';
 import {onCall} from 'firebase-functions/v2/https';
 
+interface DashboardStats {
+    expensesAnalysis: {
+        labels: string[],
+        expenseCountData: number[],
+        _totalAllCat: number
+    },
+    graphInvoiceExpenses: {
+        labels: string [],
+        expenses: number[],
+        invoices: number[]
+    },
+    countTotal: {
+        customers: number,
+        invoices: number,
+        paymentsReceived: number,
+        salesReceipts: number,
+        quotations: number,
+        expenses: number,
+    },
+    amountTotals: {
+        customers: number,
+        invoices: number,
+        paymentsReceived: number,
+        salesReceipts: number,
+        quotations: number,
+        expenses: number,
+    }
+}
+
 interface Company {
     id: string;
     name: string;
@@ -40,7 +69,7 @@ export const onUserSignUp = onCall(async (request) => {
 
         const companyId = await createCompany(d.company);
         await createUsers(d.user, d.password, companyId);
-
+        await createDashboard(companyId);
         return {status: 'success', message: 'we are all good!'};
     } catch (e) {
         return {status: 'error', message: e.message.toString()};
@@ -48,6 +77,41 @@ export const onUserSignUp = onCall(async (request) => {
 
 });
 
+async function createDashboard(companyId: string) {
+    const initialDashboardStats: DashboardStats = {
+        expensesAnalysis: {
+            labels: [],
+            expenseCountData: [],
+            _totalAllCat: 0
+        },
+        graphInvoiceExpenses: {
+            labels: [],
+            expenses: [],
+            invoices: []
+        },
+        countTotal: {
+            customers: 0,
+            invoices: 0,
+            paymentsReceived: 0,
+            salesReceipts: 0,
+            quotations: 0,
+            expenses: 0,
+        },
+        amountTotals: {
+            customers: 0,
+            invoices: 0,
+            paymentsReceived: 0,
+            salesReceipts: 0,
+            quotations: 0,
+            expenses: 0,
+        }
+    };
+    await admin.firestore().collection('companies')
+        .doc(companyId)
+        .collection('dashboard')
+        .doc('STATS').set({...initialDashboardStats}, {merge: true});
+
+}
 
 export async function createUsers(user: {
     fullName: string,
@@ -80,7 +144,7 @@ export async function createCompany(company1: {
         ...company1,
         counters: {
             invoices: 0,
-            customers:0,
+            customers: 0,
             expenses: 0,
             payments: 0,
             salesReceipts: 0,

@@ -51,3 +51,5 @@ async function generateGraphDataInvoiceExpenses(companyId: string) {
         }
     }, {merge: true});
 }
+
+

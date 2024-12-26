@@ -88,5 +88,5 @@ async function calculateCompanyTotals(companyId: string) {
 
 function calculateTotal(data: { amount: number }[]) {
     return data
-        .reduce((acc, item) => acc + item.amount, 0);
+        .reduce((acc, item) => acc + Number(item.amount), 0);
 }
