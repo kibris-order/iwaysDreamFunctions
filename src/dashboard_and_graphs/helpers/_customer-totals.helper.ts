@@ -20,7 +20,7 @@ function calculateTotal(customerId: string, data: { customer: { id?: string } | 
     const items = data.filter(inv => inv?.customer?.id === customerId);
     // console.log(allCustomerInvoice);
     return items
-        .reduce((acc, item) => acc + item.amount, 0);
+        .reduce((acc, item) => acc + Number(item.amount), 0);
 }
 
 /*function getCustomerTotal(customerId: string) {

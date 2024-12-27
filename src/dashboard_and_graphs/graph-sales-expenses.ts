@@ -18,7 +18,7 @@ export const onExpensesWritten = onDocumentWritten("companies/{companyId}/expens
 
     });
 
-export const onInvoiceWritten = onDocumentWritten("companies/{companyId}/invoice/{invoiceId}",
+export const onInvoiceWritten = onDocumentWritten("companies/{companyId}/invoices/{invoiceId}",
     async (event) => {
 
         const companyId = event.params.companyId;
