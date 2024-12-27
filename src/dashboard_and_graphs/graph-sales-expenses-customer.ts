@@ -18,7 +18,7 @@ export const onExpensesWritten = onDocumentWritten("companies/{companyId}/expens
         const document = event.data.after.data() as Expenses;
         const companyId = event.params.companyId;
 
-        if(document.customer){
+        if(document?.customer){
             const customerId = document?.customer.id;
 
             await generateCustomerGraph(companyId, customerId);

@@ -2,7 +2,7 @@ import {Expenses} from "../../shared/models";
 
 
 export function generateGraphData(expenses: Expenses[]) {
-    const totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const totalAmount = expenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
 
     // Group expenses by `expenseAccount` and calculate totals
     const groupedData: Record<string, { count: number; totalAmount: number }> = {};
@@ -12,7 +12,7 @@ export function generateGraphData(expenses: Expenses[]) {
             groupedData[account] = {count: 0, totalAmount: 0};
         }
         groupedData[account].count++;
-        groupedData[account].totalAmount += expense.amount;
+        groupedData[account].totalAmount += Number(expense.amount);
     });
 
     // Convert grouped data into labels and counts for the graph

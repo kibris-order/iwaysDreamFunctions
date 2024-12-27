@@ -34,7 +34,7 @@ export function groupByMonth(data: any[], dateField: string): Record<string, num
         console.log(item[dateField]);
         const date = parse(item[dateField], 'dd MMM yyyy', new Date());
         const monthKey = format(date, 'MMMM'); // Get full month name
-        acc[monthKey] = (acc[monthKey] || 0) + item.amount;
+        acc[monthKey] = (acc[monthKey] || 0) + Number(item.amount);
         return acc;
     }, {} as Record<string, number>);
 }
