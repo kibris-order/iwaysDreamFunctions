@@ -7,7 +7,6 @@ exports.auth_function = require("./authentication/users");
 
 exports.counters= require('./count/counter');
 exports.customer_update_cascade = require("./onupdated/customersUpdate");
-exports.customer_delete_cascade = require("./onupdated/customerDeleted");
 exports.counters = require('./count/counter');
 exports.dashboard_graph_expenses = require('./dashboard_and_graphs/graph-expenses');
 exports.dashboard_graph_sales_expenses = require('./dashboard_and_graphs/graph-sales-expenses');
