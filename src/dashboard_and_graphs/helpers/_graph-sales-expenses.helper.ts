@@ -7,26 +7,32 @@ export function calculateMonthlyTotals(expenses: any[], invoices: any[], current
     const expenseByMonth = groupByMonth(expenses, 'date');
     const invoiceByMonth = groupByMonth(invoices, 'date');
     console.log('calculate monthly totals expense and invoice groupByMonth completed');
+
     // Define all months of the year
     const monthOrder = [
         'January', 'February', 'March', 'April', 'May',
         'June', 'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    // Filter months to include only up to the current month
-    const filteredMonths = monthOrder.slice(0, monthOrder.indexOf(currentMonth) + 1);
-    console.log('calculate monthly totals filtered months completed');
+    // Determine the last 12 months based on the current month
+    const currentMonthIndex = monthOrder.indexOf(currentMonth);
+    const last12Months = [];
+    for (let i = 0; i < 12; i++) {
+        const monthIndex = (currentMonthIndex - i + 12) % 12;
+        last12Months.unshift(monthOrder[monthIndex]);
+    }
+
+    console.log('calculate monthly totals last 12 months determined');
+
     // Prepare labels and data
-    const labels = filteredMonths;
+    const labels = last12Months;
     const expenseData = labels.map(month => expenseByMonth[month] || 0);
     const invoiceData = labels.map(month => invoiceByMonth[month] || 0);
 
     console.log('label maps completed');
-
     console.log('calculate monthly totals ended');
-    return {labels, invoiceData, expenseData};
+    return { labels, invoiceData, expenseData };
 }
-
 
 // Function to group data by month
 export function groupByMonth(data: any[], dateField: string): Record<string, number> {
