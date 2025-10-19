@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import {onCall} from 'firebase-functions/v2/https';
+import {HttpsError, onCall} from 'firebase-functions/v2/https';
 
 interface DashboardStats {
     expensesAnalysis: {
@@ -157,3 +157,23 @@ export async function createCompany(company1: {
     return company.id;
 
 }
+
+export const createCustomToken = onCall(async (data, context) => {
+    const idToken = data.data.idToken;
+    if (!idToken) {
+        throw new HttpsError('invalid-argument', 'idToken is required.');
+    }
+
+    try {
+        // Verify the incoming ID token
+        const decoded = await admin.auth().verifyIdToken(idToken);
+
+        // Create a new custom token for that user
+        const customToken = await admin.auth().createCustomToken(decoded.uid);
+
+        return { customToken };
+    } catch (error) {
+        console.error('Error creating custom token:', error);
+        throw new HttpsError('internal', 'Error creating custom token.');
+    }
+});
