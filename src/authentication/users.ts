@@ -164,12 +164,12 @@ export const createCustomToken = onCall(async (data, context) => {
         throw new HttpsError('invalid-argument', 'idToken is required.');
     }
 
-    try {
+    try {  // Create a new custom token for that user
         // Verify the incoming ID token
-        const decoded = await admin.auth().verifyIdToken(idToken);
+        const decodedx = await admin.auth().verifyIdToken(idToken);
 
-        // Create a new custom token for that user
-        const customToken = await admin.auth().createCustomToken(decoded.uid);
+
+        const customToken = await admin.auth().createCustomToken(decodedx.uid);
 
         return { customToken };
     } catch (error) {
