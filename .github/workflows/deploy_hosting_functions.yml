@@ -26,15 +26,11 @@ jobs:
         run: |
           npm run build
 
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Authenticate with Firebase
-        run: |
-          echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IWAYSDREAM }}' > $HOME/serviceAccountKey.json
-        shell: bash
-
-      - name: Deploy Firebase Functions
+      # Deploying the functions to firebase
+      # firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}"
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: $HOME/serviceAccountKey.json
-        run: firebase deploy --project iwaysdream
+          FIREBASE_TOKEN: "${{ secrets.FIREBASE_TOKEN }}"
